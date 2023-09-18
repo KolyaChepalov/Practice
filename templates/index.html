@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>REST API - Николай Чепалов</title>
+</head>
+<style>
+    .news {
+        width: 460px;
+    }
+</style>
+<body>
+    <h1>Последние новости</h1>
+    <ul id="news-list"></ul>
+    <p>REST API - Николай Чепалов 2023 (c)</p>
+
+    <script>
+        // Функция для получения данных с локального API и отображения на странице
+        async function fetchNews() {
+            const response = await fetch('/api/news');
+            const newsData = await response.json();
+
+            const newsList = document.getElementById('news-list');
+            newsData.forEach(news => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <h2>${news.title}</h2>
+                    <p><strong>Дата:</strong> ${news.date}</p>
+                    <img class="news" src="${news.image}">
+                    <p>${news.description}</p>
+                `;
+                newsList.appendChild(listItem);
+            });
+        }
+
+        // вызов функции после загрузки страницы
+        document.addEventListener('DOMContentLoaded', fetchNews);
+    </script>
+</body>
+</html>
